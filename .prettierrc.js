@@ -16,6 +16,7 @@ module.exports = {
   vueIndentScriptAndStyle: true,
   // 行结束符
   endOfLine: 'lf',
+  end_of_line: 'lf',
   // 在html vue jsx中 强制每行都是单个属性(@click disable会被分开为两行)
   singleAttributePerLine: true,
 }
