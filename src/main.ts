@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-import './service/axios-demo.ts'
+import './service/request/axios-demo.ts'
 
 // 全局引入
 import ElementPlus from 'element-plus'
