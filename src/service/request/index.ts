@@ -9,8 +9,8 @@ class ccRequest {
     this.instance = axios.create(config)
   }
 
-  get(p: string) {
-    this.instance.get(p).then((res) => {
+  request(config: AxiosRequestConfig): void {
+    this.instance.request(config).then((res) => {
       console.log(res)
     })
   }

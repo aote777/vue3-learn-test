@@ -16,7 +16,10 @@
       return {}
     },
     mounted() {
-      ccReq.get('/kuayu/get')
+      ccReq.request({
+        url: '/get',
+        method: 'GET',
+      })
     },
   })
 </script>

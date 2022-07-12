@@ -4,14 +4,14 @@ module.exports = defineConfig({
   transpileDependencies: true,
   lintOnSave: false,
   devServer: {
-    proxy: {
-      '/kuayu': {
-        target: 'http://httpbin.org',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/kuayu': '',
-        },
-      },
-    },
+    // proxy: {
+    //   '/kuayu': {
+    //     target: 'http://httpbin.org',
+    //     changeOrigin: true,
+    //     pathRewrite: {
+    //       '^/kuayu': '',
+    //     },
+    //   },
+    // },
   },
 })
