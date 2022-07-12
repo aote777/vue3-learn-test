@@ -1,20 +1,10 @@
-import axios from 'axios'
-import type { AxiosInstance, AxiosRequestConfig } from 'axios'
-// axios - >
-
-axios.defaults.baseURL = ''
-
-class Request {
-  instance: AxiosInstance
-  constructor(config: AxiosRequestConfig) {
-    this.instance = axios.create(config)
+class ccRequest {
+  request() {
+    console.log('request')
   }
-
-  request(config: AxiosRequestConfig): void {
-    this.instance.request(config).then(() => {
-      console.log()
-    })
+  get() {
+    console.log('get')
   }
 }
 
-export default Request
+export default ccRequest

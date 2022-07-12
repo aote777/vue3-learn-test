@@ -1,3 +1,3 @@
-import Request from './request/index'
+import ccRequest from './request/index'
 
-export default new Request()
+export default new ccRequest()
