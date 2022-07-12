@@ -1,5 +1,7 @@
 import axios, { Axios } from 'axios'
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import { ElLoading } from 'element-plus'
+import { LoadingInstance } from 'element-plus/lib/components/loading/src/loading'
 // axios 可以创建不同的实例
 
 // 定义属于当前封装的类型
@@ -13,12 +15,17 @@ interface ccRequestInterceptors {
 
 interface ccRequestConfig extends AxiosRequestConfig {
   interceptors?: ccRequestInterceptors
+  showLoadingBool?: boolean
 }
 
 class ccRequest {
   instance: AxiosInstance
   interceptors?: ccRequestInterceptors
+  showLoadingBool?: boolean
+  loading?: LoadingInstance
+
   constructor(config: ccRequestConfig) {
+    this.showLoadingBool = config.showLoadingBool ?? false
     this.instance = axios.create(config)
     this.interceptors = config.interceptors
     this.instance.interceptors.request.use(
@@ -34,6 +41,14 @@ class ccRequest {
     // 请求
     this.instance.interceptors.request.use(
       (config) => {
+        if (this.showLoadingBool) {
+          // 开启loading
+          this.loading = ElLoading.service({
+            lock: true,
+            text: '正在请求数据...',
+            background: 'pink',
+          })
+        }
         return config
       },
       (err) => {
@@ -42,10 +57,25 @@ class ccRequest {
     )
     // 响应
     this.instance.interceptors.response.use(
-      (res) => {
+      async (res) => {
+        await new Promise((resolve: (value: unknown) => void) => {
+          setTimeout(() => {
+            resolve(1)
+          }, 1000)
+        })
+        if (this.showLoadingBool) {
+          this.loading?.close()
+        }
+        // 重置loading-tag 防止下一个请求收到影响
+        this.showLoadingBool = false
         return res.data
       },
       (err) => {
+        if (this.showLoadingBool) {
+          this.loading?.close()
+        }
+        // 重置loading-tag 防止下一个请求收到影响
+        this.showLoadingBool = false
         return err
       }
     )
