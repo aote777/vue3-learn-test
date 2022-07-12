@@ -1,3 +1,5 @@
 import ccRequest from './request/index'
 
-export default new ccRequest()
+export const ccReq = new ccRequest({
+  // baseURL: process.env.VUE_APP_BASE_URL,
+})

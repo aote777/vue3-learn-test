@@ -8,11 +8,15 @@
 </template>
 
 <script lang="ts">
+  import { ccReq } from '@/service/index'
   import { defineComponent } from 'vue'
   export default defineComponent({
     name: 'about-view',
     data() {
       return {}
+    },
+    mounted() {
+      ccReq.get('/kuayu/get')
     },
   })
 </script>

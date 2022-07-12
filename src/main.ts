@@ -2,8 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import ccRequest from './service/index'
-
+console.log('当前baseurl 是多少?', process.env.VUE_APP_BASE_URL)
 import './service/request/axios-demo.ts'
 
 // 全局引入
