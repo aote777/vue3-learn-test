@@ -29,10 +29,38 @@ class ccRequest {
       this.interceptors?.responseInterceptors,
       this.interceptors?.responseInterceptorsCatch
     )
+
+    // 添加所有的实例都有的拦截器
+    // 请求
+    this.instance.interceptors.request.use(
+      (config) => {
+        return config
+      },
+      (err) => {
+        return err
+      }
+    )
+    // 响应
+    this.instance.interceptors.response.use(
+      (res) => {
+        return res.data
+      },
+      (err) => {
+        return err
+      }
+    )
   }
 
-  request(config: AxiosRequestConfig): void {
+  request(config: ccRequestConfig): void {
+    // 配置属于单独自己的请求的拦截器
+    if (config.interceptors?.requestInterceptors) {
+      config = config.interceptors.requestInterceptors(config)
+    }
     this.instance.request(config).then((res) => {
+      // 返回的请求的拦截器
+      if (config.interceptors?.responseInterceptors) {
+        res = config.interceptors.responseInterceptors(res)
+      }
       console.log(res)
     })
   }
