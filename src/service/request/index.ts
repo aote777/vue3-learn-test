@@ -1,6 +1,5 @@
 import axios from 'axios'
 import type { AxiosInstance, AxiosRequestConfig } from 'axios'
-import { RowJustify } from 'element-plus'
 // axios 可以创建不同的实例
 
 class ccRequest {
