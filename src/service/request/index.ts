@@ -9,7 +9,7 @@ interface ccRequestInterceptors {
   requestInterceptors?: (config: AxiosRequestConfig) => AxiosRequestConfig
   requestInterceptorsCatch?: (error: any) => any
 
-  responseInterceptors?: (res: AxiosResponse) => AxiosResponse
+  responseInterceptors?: (res: any) => any
   responseInterceptorsCatch?: (error: any) => any
 }
 
@@ -57,12 +57,7 @@ class ccRequest {
     )
     // 响应
     this.instance.interceptors.response.use(
-      async (res) => {
-        await new Promise((resolve: (value: unknown) => void) => {
-          setTimeout(() => {
-            resolve(1)
-          }, 1000)
-        })
+      (res) => {
         if (this.showLoadingBool) {
           this.loading?.close()
         }
@@ -81,18 +76,42 @@ class ccRequest {
     )
   }
 
-  request(config: ccRequestConfig): void {
-    // 配置属于单独自己的请求的拦截器
-    if (config.interceptors?.requestInterceptors) {
-      config = config.interceptors.requestInterceptors(config)
-    }
-    this.instance.request(config).then((res) => {
-      // 返回的请求的拦截器
-      if (config.interceptors?.responseInterceptors) {
-        res = config.interceptors.responseInterceptors(res)
+  request<T>(config: ccRequestConfig): Promise<T> {
+    return new Promise((resolve, reject) => {
+      // 配置属于单独自己的请求的拦截器
+      if (config.interceptors?.requestInterceptors) {
+        config = config.interceptors.requestInterceptors(config)
       }
-      console.log(res)
+      this.instance
+        .request<any, T>(config)
+        .then((res) => {
+          // 返回的请求的拦截器
+          if (config.interceptors?.responseInterceptors) {
+            res = config.interceptors.responseInterceptors(res)
+          }
+          // console.log(res)
+          resolve(res)
+        })
+        .catch((err) => {
+          reject(err)
+        })
     })
+  }
+
+  get<T>(config: ccRequestConfig) {
+    return this.request<T>({ ...config, method: 'GET' })
+  }
+
+  post<T>(config: ccRequestConfig) {
+    return this.request<T>({ ...config, method: 'POST' })
+  }
+
+  delete<T>(config: ccRequestConfig) {
+    return this.request<T>({ ...config, method: 'DELETE' })
+  }
+
+  patch<T>(config: ccRequestConfig) {
+    return this.request<T>({ ...config, method: 'PATCH' })
   }
 }
 
