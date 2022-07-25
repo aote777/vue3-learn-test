@@ -1,0 +1,19 @@
+<body>
+  <div id="app"></div>
+</body>
+
+<script
+  type="x-template"
+  id="template">
+  <div>我是模板</div>
+</script>
+
+<script>
+  Vue.createAPp({
+    // template中 已#开头 他会把这个字符串用作document.querySelector的参数来使用
+    template: '#template',
+    data() {
+      return {}
+    },
+  }).mount('#app')
+</script>

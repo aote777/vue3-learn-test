@@ -1,9 +1,6 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
-    <el-button type="danger">+++</el-button>
-    <el-button type="primary">+++</el-button>
-    <el-button type="default">+++</el-button>
+    <h1 :style="[{ color: 'red' }]">This is an about page</h1>
   </div>
 </template>
 
@@ -16,10 +13,10 @@
       return {}
     },
     mounted() {
-      ccReq.request({
-        url: '/get',
-        method: 'GET',
-      })
+      // ccReq.request({
+      //   url: '/get',
+      //   method: 'GET',
+      // })
     },
   })
 </script>
